@@ -8,7 +8,7 @@ xset +fp ~/.fonts
 xset fp rehash
 xset s off
 xset dpms 3600 3600 3600
-wmname LG3D
+wmname LG3D &
 mpd &
 numlockx &
 tmux &
