@@ -32,7 +32,7 @@ print_song_info() {
   if [[ ! $song_info ]]; then
     song_info="Not playing"
   fi
-echo -e "\x08Î ${song_info}\x01"
+  echo -e "\x08Î ${song_info}\x01"
 }
 
 print_volume() {
@@ -55,12 +55,12 @@ tx_old=$(cat /sys/class/net/eth0/statistics/tx_bytes)
 while true; do
   # get new cpu idle and total usage
   eval $(awk '/^cpu /{print "cpu_idle_now=" $5 \
-"; cpu_total_now=" $2+$3+$4+$5 }' /proc/stat)
+    "; cpu_total_now=" $2+$3+$4+$5 }' /proc/stat)
   cpu_interval=$((cpu_total_now-${cpu_total_old:-0}))
   # calculate cpu usage (%)
   let cpu_used="100 * ($cpu_interval - ($cpu_idle_now-${cpu_idle_old:-0})) \
-/ $cpu_interval"
-  
+    / $cpu_interval"
+
   # get new rx/tx counts
   rx_now=$(cat /sys/class/net/eth0/statistics/rx_bytes)
   tx_now=$(cat /sys/class/net/eth0/statistics/tx_bytes)
