@@ -5,22 +5,22 @@
 
 print_last_msg() {
   last_msg="$(cat ~/.irssi_pipe)"
-  echo -e "\x06Ò ${last_msg}\x01"
+  echo -ne "\x06Ò ${last_msg}\x01"
 }
 
 print_gmail_unread() {
   gmail_unread="$(find ~/.maildir/gmail/inbox/new -type f | wc -l)"
-  echo -e "\x06Ó ${gmail_unread}\x01 GM"
+  echo -ne "\x06Ó ${gmail_unread}\x01 GM"
 }
 
 print_mq_unread() {
   mq_unread="$(find ~/.maildir/mq/inbox/new -type f | wc -l)"
-  echo -e "\x06Ó ${mq_unread}\x01 MQ"
+  echo -ne "\x06Ó ${mq_unread}\x01 MQ"
 }
 
 print_mem_used() {
   mem_used="$(free -m | awk '/buffers\/cache/ {print $3}')"
-  echo -e "${mem_used}M"
+  echo -ne "${mem_used}M"
 }
 
 print_song_info() {
@@ -28,17 +28,17 @@ print_song_info() {
   if [[ ! $song_info ]]; then
     song_info="Not playing"
   fi
-  echo -e "\x08Î ${song_info}\x01"
+  echo -ne "\x08Î ${song_info}\x01"
 }
 
 print_volume() {
   volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  echo -e "\x09Ô ${volume}%\x01"
+  echo -ne "\x09Ô ${volume}%\x01"
 }
 
 print_datetime() {
   datetime="$(date "+%a %d %b, %I:%M %p")"
-  echo -e "\x02Õ ${datetime}\x01"
+  echo -ne "\x02Õ ${datetime}\x01"
 }
 
 # network (see: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
@@ -63,18 +63,18 @@ while true; do
   let tx_total=$tx_now/1048576
 
   # output vars
-  print_cpu_used() { echo -e "\x07Ï ${cpu_used}%\x01"; }
-  print_rx_rate() { echo -e "\x05Ð ${rx_rate}K\x01"; }
-  print_rx_total() { echo -e "${rx_total}M"; }
-  print_tx_rate() { echo -e "\x04Ñ ${tx_rate}K\x01"; }
-  print_tx_total() { echo -e "${tx_total}M"; }
+  print_cpu_used() { printf "%9b" "\x07Ï ${cpu_used}%\x01"; }
+  print_rx_rate() { printf "%9b" "\x05Ð ${rx_rate}K\x01"; }
+  print_rx_total() { echo -ne "${rx_total}M"; }
+  print_tx_rate() { printf "%9b" "\x04Ñ ${tx_rate}K\x01"; }
+  print_tx_total() { echo -ne "${tx_total}M"; }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
-  xsetroot -name "Ö $(print_last_msg) Ö \
+  xsetroot -name "Ö $(print_song_info) Ö \
+$(print_last_msg) Ö \
 $(print_gmail_unread) $(print_mq_unread) Ö \
-$(print_rx_rate) $(print_rx_total) $(print_tx_rate) $(print_tx_total) Ö \
 $(print_cpu_used) $(print_mem_used) Ö \
-$(print_song_info) Ö \
+$(print_rx_rate) $(print_rx_total) $(print_tx_rate) $(print_tx_total) Ö \
 $(print_volume) Ö \
 $(print_datetime) "
 
