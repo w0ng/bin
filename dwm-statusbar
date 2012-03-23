@@ -18,10 +18,6 @@ print_mq_unread() {
   echo -e "\x06Ó ${mq_unread}\x01 MQ"
 }
 
-print_dropbox_status() {
-  echo -e "\x07Ù $(dropbox status)\x01"
-}
-
 print_mem_used() {
   mem_used="$(free -m | awk '/buffers\/cache/ {print $3}')"
   echo -e "${mem_used}M"
@@ -45,8 +41,6 @@ print_datetime() {
   echo -e "\x02Õ ${datetime}\x01"
 }
 
-
-
 # network (see: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
 # cpu (see:https://bbs.archlinux.org/viewtopic.php?pid=661641#p661641)
 rx_old=$(cat /sys/class/net/eth0/statistics/rx_bytes)
@@ -54,12 +48,10 @@ tx_old=$(cat /sys/class/net/eth0/statistics/tx_bytes)
 
 while true; do
   # get new cpu idle and total usage
-  eval $(awk '/^cpu /{print "cpu_idle_now=" $5 \
-    "; cpu_total_now=" $2+$3+$4+$5 }' /proc/stat)
+  eval $(awk '/^cpu /{print "cpu_idle_now=" $5 "; cpu_total_now=" $2+$3+$4+$5 }' /proc/stat)
   cpu_interval=$((cpu_total_now-${cpu_total_old:-0}))
   # calculate cpu usage (%)
-  let cpu_used="100 * ($cpu_interval - ($cpu_idle_now-${cpu_idle_old:-0})) \
-    / $cpu_interval"
+  let cpu_used="100 * ($cpu_interval - ($cpu_idle_now-${cpu_idle_old:-0})) / $cpu_interval"
 
   # get new rx/tx counts
   rx_now=$(cat /sys/class/net/eth0/statistics/rx_bytes)
