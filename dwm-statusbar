@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# ~/bin/dwm-statusbar
+#
 # Status bar for dwm (see http://jasonwryan.com/)
 # colors: \x01 grey; \x02 white; \x04 red; \x05 green; \x06 yellow; 
 #         \x07 blue; \x08 magenta; \x09 cyan
