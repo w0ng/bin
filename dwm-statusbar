@@ -7,7 +7,7 @@
 #         \x07 blue; \x08 magenta; \x09 cyan
 
 print_song_info() {
-  song_info="$(ncmpcpp --now-playing '{{{{%a - }%t}}|{%f}}' | head -c 60)"
+  song_info="$(ncmpcpp --now-playing '{{{{%a - }%t}}|{%f}}' | head -c 50)"
   if [[ ! $song_info ]]; then
     song_info="Not playing"
   fi
@@ -16,11 +16,11 @@ print_song_info() {
 
 print_torrent_status() {
   torrent_status="$(transmission-remote -l | awk '/\ \ Up\ &\ Down\ \ /\
-      {print "\x09"substr(substr($0,index($0,$13)),0,50), "\x01"$2, $5$6}')"
+      {print "\x09"substr(substr($0,index($0,$13)),0,40), "\x01"$2, $5$6}')"
   if [[ ! $torrent_status ]]; then
     torrent_status="$( transmission-remote -l | awk '/\ \ Downloading\ \ /\
         && ! /\ \ Unknown\ \ /\
-        {print "\x09"substr(substr($0,index($0,$11)),0,50), "\x01"$2, $5$6}')"
+        {print "\x09"substr(substr($0,index($0,$11)),0,40), "\x01"$2, $5$6}')"
   fi
   if [[ ! $torrent_status ]]; then
     torrent_status="Not downloading"
@@ -35,12 +35,12 @@ print_last_msg() {
 
 print_gmail_unread() {
   gmail_unread="$(find ~/.maildir/gmail/inbox/new -type f | wc -l)"
-  echo -ne "\x06Ó ${gmail_unread}\x01 GM"
+  echo -ne "\x06Ó ${gmail_unread}\x01"
 }
 
 print_mq_unread() {
   mq_unread="$(find ~/.maildir/mq/inbox/new -type f | wc -l)"
-  echo -ne "\x06Ó ${mq_unread}\x01 MQ"
+  echo -ne "\x06Ó ${mq_unread}\x01"
 }
 
 print_mem_used() {
@@ -81,7 +81,7 @@ while true; do
 
   # output vars
   print_cpu_used() { printf "%9b" "\x07Ï ${cpu_used}%\x01"; }
-  print_rx_rate() { printf "%9b" "\x05Ð ${rx_rate}K\x01"; }
+  print_rx_rate() { printf "%10b" "\x05Ð ${rx_rate}K\x01"; }
   print_rx_total() { echo -ne "${rx_total}M"; }
   print_tx_rate() { printf "%9b" "\x04Ñ ${tx_rate}K\x01"; }
   print_tx_total() { echo -ne "${tx_total}M"; }
@@ -92,7 +92,7 @@ $(print_torrent_status) Ö \
 $(print_last_msg) Ö \
 $(print_gmail_unread) $(print_mq_unread) Ö \
 $(print_cpu_used) $(print_mem_used) Ö \
-$(print_rx_rate) $(print_rx_total) $(print_tx_rate) $(print_tx_total) Ö \
+$(print_rx_rate) $(print_tx_rate) Ö \
 $(print_volume) Ö \
 $(print_datetime) "
 
