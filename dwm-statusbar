@@ -2,9 +2,31 @@
 #
 # ~/bin/dwm-statusbar
 #
-# Status bar for dwm (see http://jasonwryan.com/)
+# Status bar for dwm (parts taken from http://jasonwryan.com/)
 # colors: \x01 grey; \x02 white; \x04 red; \x05 green; \x06 yellow; 
 #         \x07 blue; \x08 magenta; \x09 cyan
+
+print_song_info() {
+  song_info="$(ncmpcpp --now-playing '{{{{%a - }%t}}|{%f}}' | head -c 60)"
+  if [[ ! $song_info ]]; then
+    song_info="Not playing"
+  fi
+  echo -ne "\x08Î ${song_info}\x01"
+}
+
+print_torrent_status() {
+  torrent_status="$(transmission-remote -l | awk '/\ \ Up\ &\ Down\ \ /\
+      {print "\x09"substr(substr($0,index($0,$13)),0,50), "\x01"$2, $5$6}')"
+  if [[ ! $torrent_status ]]; then
+    torrent_status="$( transmission-remote -l | awk '/\ \ Downloading\ \ /\
+        && ! /\ \ Unknown\ \ /\
+        {print "\x09"substr(substr($0,index($0,$11)),0,50), "\x01"$2, $5$6}')"
+  fi
+  if [[ ! $torrent_status ]]; then
+    torrent_status="Not downloading"
+  fi
+  echo -ne "\x09Ù ${torrent_status}\x01"
+}
 
 print_last_msg() {
   last_msg="$(cat ~/.irssi_pipe)"
@@ -26,17 +48,9 @@ print_mem_used() {
   echo -ne "${mem_used}M"
 }
 
-print_song_info() {
-  song_info="$(ncmpcpp --now-playing '{{{{%a - }%t}}|{%f}}' | head -c 60)"
-  if [[ ! $song_info ]]; then
-    song_info="Not playing"
-  fi
-  echo -ne "\x08Î ${song_info}\x01"
-}
-
 print_volume() {
   volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  echo -ne "\x09Ô ${volume}%\x01"
+  echo -ne "\x02Ô ${volume}%\x01"
 }
 
 print_datetime() {
@@ -74,6 +88,7 @@ while true; do
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "Ö $(print_song_info) Ö \
+$(print_torrent_status) Ö \
 $(print_last_msg) Ö \
 $(print_gmail_unread) $(print_mq_unread) Ö \
 $(print_cpu_used) $(print_mem_used) Ö \
