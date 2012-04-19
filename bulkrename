@@ -7,5 +7,5 @@ find "$1" -depth | while read line; do
   new="$(echo $old | tr ' ' '.' | sed 's/\.-\./-/g'\
       | tr -d '()[]{},?!' | tr -d "'"\
       | tr '[[:upper:]]' '[[:lower:]]')"
-  [[ "$old" != "$new" ]] && mv -iv "$dir/$old" "$dir/$new" >> ~/.logs/bulkrename.log
+  [[ "$old" != "$new" ]] && mv -iv "$dir/$old" "$dir/$new"
 done
