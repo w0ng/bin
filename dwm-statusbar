@@ -89,8 +89,7 @@ while true; do
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "Ö $(print_song_info) Ö \
 $(print_torrent_status) Ö \
-$(print_last_msg) Ö \
-$(print_gmail_unread) $(print_mq_unread) Ö \
+$(print_gmail_unread) $(print_mq_unread) $(print_last_msg) Ö \
 $(print_cpu_used) $(print_mem_used) Ö \
 $(print_rx_rate) $(print_tx_rate) Ö \
 $(print_volume) Ö \
