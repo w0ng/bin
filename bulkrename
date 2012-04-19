@@ -1,0 +1,11 @@
+#!/bin/bash
+# replace spaces with periods, delete puncutation, change upper to lower case
+
+find "$1" -depth | while read line; do
+  dir="$(dirname "$line")"
+  old="$(basename "$line")"
+  new="$(echo $old | tr ' ' '.' | sed 's/\.-\./-/g'\
+      | tr -d '()[]{},?!' | tr -d "'"\
+      | tr '[[:upper:]]' '[[:lower:]]')"
+  [[ "$old" != "$new" ]] && mv -iv "$dir/$old" "$dir/$new"
+done
