@@ -5,10 +5,9 @@
 find "$1" -depth | while read line; do
   dir="$(dirname "$line")"
   old="$(basename "$line")"
-  new="$(echo $old | tr ' ' '_'\ 
-      | tr -d '()[]{},?!' | tr -d "'"\
-      | tr '[[:upper:]]' '[[:lower:]]'\
-      | sed 's/__/_/g'\
-      | sed 's/_-_/-/g')"
+  new="$(echo $old | tr ' ' '_' \
+      | tr -d '()[]{},?!' | tr -d "'" \
+      | tr '[[:upper:]]' '[[:lower:]]' \
+      | sed 's/_-_/-/g' | sed 's/__/_/g')"
   [[ "$old" != "$new" ]] && mv -iv "$dir/$old" "$dir/$new"
 done
