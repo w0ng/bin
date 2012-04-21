@@ -76,15 +76,15 @@ while true; do
   # calculate the rate (K) and total (M)
   let rx_rate=($rx_now-$rx_old)/1024
   let tx_rate=($tx_now-$tx_old)/1024
-  let rx_total=$rx_now/1048576
-  let tx_total=$tx_now/1048576
+#  let rx_total=$rx_now/1048576
+#  let tx_total=$tx_now/1048576
 
   # output vars
   print_cpu_used() { printf "%9b" "\x07Ï ${cpu_used}%\x01"; }
   print_rx_rate() { printf "%10b" "\x05Ð ${rx_rate}K\x01"; }
-  print_rx_total() { echo -ne "${rx_total}M"; }
+#  print_rx_total() { echo -ne "${rx_total}M"; }
   print_tx_rate() { printf "%9b" "\x04Ñ ${tx_rate}K\x01"; }
-  print_tx_total() { echo -ne "${tx_total}M"; }
+#  print_tx_total() { echo -ne "${tx_total}M"; }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "Ö $(print_song_info) Ö \
