@@ -55,7 +55,7 @@ print_volume() {
 
 print_datetime() {
   datetime="$(date "+%a %d %b, %I:%M %p")"
-  echo -ne "\x02Õ ${datetime}\x01"
+  echo -ne "Õ ${datetime}"
 }
 
 # network (see: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
@@ -80,8 +80,8 @@ while true; do
 #  let tx_total=$tx_now/1048576
 
   # output vars
-  print_cpu_used() { printf "%9b" "\x07Ï ${cpu_used}%\x01"; }
-  print_rx_rate() { printf "%10b" "\x05Ð ${rx_rate}K\x01"; }
+  print_cpu_used() { printf "%-9b" "\x07Ï ${cpu_used}%\x01"; }
+  print_rx_rate() { printf "%-10b" "\x05Ð ${rx_rate}K\x01"; }
 #  print_rx_total() { echo -ne "${rx_total}M"; }
   print_tx_rate() { printf "%9b" "\x04Ñ ${tx_rate}K\x01"; }
 #  print_tx_total() { echo -ne "${tx_total}M"; }
@@ -92,8 +92,7 @@ $(print_torrent_status) Ý \
 $(print_gmail_unread) $(print_mq_unread) $(print_last_msg) Ý \
 $(print_cpu_used) $(print_mem_used) Ý \
 $(print_rx_rate) $(print_tx_rate) Ý \
-$(print_volume) Ý \
-$(print_datetime) "
+$(print_volume) $(print_datetime) "
 
   # reset old rates
   rx_old=$rx_now
