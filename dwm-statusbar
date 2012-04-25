@@ -87,12 +87,12 @@ while true; do
 #  print_tx_total() { echo -ne "${tx_total}M"; }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
-  xsetroot -name "Ö $(print_song_info) Ö \
-$(print_torrent_status) Ö \
-$(print_gmail_unread) $(print_mq_unread) $(print_last_msg) Ö \
-$(print_cpu_used) $(print_mem_used) Ö \
-$(print_rx_rate) $(print_tx_rate) Ö \
-$(print_volume) Ö \
+  xsetroot -name "Ý $(print_song_info) Ý \
+$(print_torrent_status) Ý \
+$(print_gmail_unread) $(print_mq_unread) $(print_last_msg) Ý \
+$(print_cpu_used) $(print_mem_used) Ý \
+$(print_rx_rate) $(print_tx_rate) Ý \
+$(print_volume) Ý \
 $(print_datetime) "
 
   # reset old rates
