@@ -78,10 +78,10 @@ while true; do
 #  let tx_total=$tx_now/1048576
 
   # output vars
-  print_cpu_used() { printf "%-11b" "\x0bÜ\x0a Ï ${cpu_used}%"; }
-  print_rx_rate() { printf "%-12b" "\x0dÜ\x0c Ð ${rx_rate}K"; }
+  print_cpu_used() { printf "%-12b" "\x0bÜ\x0a Ï ${cpu_used}1%"; }
+  print_rx_rate() { printf "%-13b" "\x0dÜ\x0c Ð ${rx_rate}K"; }
 #  print_rx_total() { echo -ne "${rx_total}M"; }
-  print_tx_rate() { printf "%-11b" "Ý Ñ ${tx_rate}K"; }
+  print_tx_rate() { printf "%-10b" "Ý Ñ ${tx_rate}K"; }
 #  print_tx_total() { echo -ne "${tx_total}M"; }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
