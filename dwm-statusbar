@@ -54,7 +54,7 @@ print_volume() {
 }
 
 print_datetime() {
-  datetime="$(date "+%a %d %b, %I:%M %p")"
+  datetime="$(date "+%a %d %b, %H:%M")"
   echo -ne "Õ ${datetime}"
 }
 
