@@ -257,7 +257,7 @@ class Background:
 class Font:
     def __init__(self):
         file = open(os.getenv('HOME') + '/.Xresources').readlines()
-        font = file[13].rsplit(':')[2]
+        font = file[13].rsplit()[-1]
         self.key = 'Font'
         self.value = font
 
