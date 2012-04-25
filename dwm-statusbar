@@ -38,7 +38,7 @@ print_mq_unread() {
 
 print_last_msg() {
   last_msg="$(cat ~/.irssi_pipe)"
-  echo -ne "Ý Ò ${last_msg}"
+  echo -ne "\x0bÜ\x0a Ò ${last_msg}"
 }
 
 print_mem_used() {
@@ -48,12 +48,12 @@ print_mem_used() {
 
 print_volume() {
   volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  echo -ne "\x0eÜ\x02 Ô ${volume}%"
+  echo -ne "\x0eÜ\x04 Ô ${volume}%"
 }
 
 print_datetime() {
   datetime="$(date "+%a %d %b, %H:%M")"
-  echo -ne "Ý Õ ${datetime}"
+  echo -ne "\x0fÜ\x02 Õ ${datetime}"
 }
 
 # network (see: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
@@ -78,8 +78,8 @@ while true; do
 #  let tx_total=$tx_now/1048576
 
   # output vars
-  print_cpu_used() { printf "%-12b" "\x0bÜ\x0a Ï ${cpu_used}1%"; }
-  print_rx_rate() { printf "%-13b" "\x0dÜ\x0c Ð ${rx_rate}K"; }
+  print_cpu_used() { printf "%-12b" "\x0cÜ\x08 Ï ${cpu_used}1%"; }
+  print_rx_rate() { printf "%-13b" "\x0dÜ\x06 Ð ${rx_rate}K"; }
 #  print_rx_total() { echo -ne "${rx_total}M"; }
   print_tx_rate() { printf "%-10b" "Ý Ñ ${tx_rate}K"; }
 #  print_tx_total() { echo -ne "${tx_total}M"; }
