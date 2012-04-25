@@ -78,7 +78,7 @@ while true; do
 #  let tx_total=$tx_now/1048576
 
   # output vars
-  print_cpu_used() { printf "%-12b" "\x0cÜ\x08 Ï ${cpu_used}1%"; }
+  print_cpu_used() { printf "%-12b" "\x0cÜ\x08 Ï ${cpu_used}%"; }
   print_rx_rate() { printf "%-13b" "\x0dÜ\x06 Ð ${rx_rate}K"; }
 #  print_rx_total() { echo -ne "${rx_total}M"; }
   print_tx_rate() { printf "%-10b" "Ý Ñ ${tx_rate}K"; }
