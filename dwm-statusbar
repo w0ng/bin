@@ -5,7 +5,7 @@
 # Status bar for dwm (parts taken from http://jasonwryan.com/)
 
 print_song_info() {
-  song_info="$(ncmpcpp --now-playing '{{{{%a - }%t}}|{%f}}' | head -c 50)"
+  song_info="$(ncmpcpp --now-playing '{{{{%a Ý }%t}}|{%f}}' | head -c 50)"
   if [[ ! $song_info ]]; then
     song_info="Not playing"
   fi
@@ -14,11 +14,11 @@ print_song_info() {
 
 print_torrent_status() {
   torrent_status="$(transmission-remote -l | awk '/\ \ Up\ &\ Down\ \ /\
-      {print substr(substr($0,index($0,$13)),0,40), $2, $5$6}')"
+      {print substr(substr($0,index($0,$13)),0,40), "Ý "$5$6}')"
   if [[ ! $torrent_status ]]; then
     torrent_status="$( transmission-remote -l | awk '/\ \ Downloading\ \ /\
         && ! /\ \ Unknown\ \ /\
-        {print substr(substr($0,index($0,$11)),0,40), $2, $5$6}')"
+        {print substr(substr($0,index($0,$11)),0,40), "Ý "$5$6}')"
   fi
   if [[ ! $torrent_status ]]; then
     torrent_status="Not downloading"
@@ -33,7 +33,7 @@ print_gmail_unread() {
 
 print_mq_unread() {
   mq_unread="$(find ~/.maildir/mq/inbox/new -type f | wc -l)"
-  echo -ne "Ó ${mq_unread}"
+  echo -ne "Ý Ó ${mq_unread}"
 }
 
 print_last_msg() {
@@ -43,7 +43,7 @@ print_last_msg() {
 
 print_mem_used() {
   mem_used="$(free -m | awk '/buffers\/cache/ {print $3}')"
-  echo -ne "Ý ${mem_used}M"
+  echo -ne "Ý Þ ${mem_used}M"
 }
 
 print_volume() {
@@ -52,7 +52,7 @@ print_volume() {
 }
 
 print_datetime() {
-  datetime="$(date "+%a %d %b, %H:%M")"
+  datetime="$(date "+%a %d %b Ý %H:%M")"
   echo -ne "\x0fÜ\x02 Õ ${datetime}"
 }
 
