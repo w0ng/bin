@@ -28,17 +28,17 @@ print_torrent_status() {
 }
 
 print_gmail_unread() {
-  gmail_unread="$(find ~/.maildir/gmail/inbox/new -type f | wc -l)"
+  gmail_unread="$(find $HOME/.maildir/gmail/inbox/new -type f | wc -l)"
   echo -ne "\x05Ü\x04 Ó ${gmail_unread}"
 }
 
 print_mq_unread() {
-  mq_unread="$(find ~/.maildir/mq/inbox/new -type f | wc -l)"
+  mq_unread="$(find $HOME/.maildir/mq/inbox/new -type f | wc -l)"
   echo -ne "Ý Ó ${mq_unread}"
 }
 
 print_last_msg() {
-  last_msg="$(cat ~/.irssi_pipe)"
+  last_msg="$(cat $HOME/.logs/irssi_pipe)"
   echo -ne "\x06Ü\x01 Ò ${last_msg}"
 }
 

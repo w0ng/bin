@@ -7,6 +7,6 @@
 # rsync backup script
 
 sudo sh -c "
-rsync -av --delete-excluded --exclude-from=/home/w0ng/.backup.list / $1;
+rsync -av --delete-excluded --exclude-from=$HOME/.config/backup.list / $1;
 touch $1/BACKUP
 "
