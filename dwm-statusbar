@@ -28,12 +28,12 @@ print_torrent_status() {
 }
 
 print_gmail_unread() {
-  gmail_unread="$(find $HOME/.maildir/gmail/inbox/new -type f | wc -l)"
+  gmail_unread="$(find $HOME/.mutt/maildir/gmail/inbox/new -type f | wc -l)"
   echo -ne "\x05Ü\x04 Ó ${gmail_unread}"
 }
 
 print_mq_unread() {
-  mq_unread="$(find $HOME/.maildir/mq/inbox/new -type f | wc -l)"
+  mq_unread="$(find $HOME/.mutt/maildir/mq/inbox/new -type f | wc -l)"
   echo -ne "Ý Ó ${mq_unread}"
 }
 
