@@ -3,10 +3,11 @@
 # ~/bin/mailrun
 #
 
-PID=$(pgrep offlineimap)
+read -r pid < ~/.offlineimap/pid
 
-[[ -n "$PID" ]] && kill "$PID"
+if ps $pid &>/dev/null; then
+  echo "offlineimap ($pid): another instance running." >&2
+  exit 1
+fi
 
-offlineimap -o -u quiet &>/dev/null &
-
-exit 
+exec offlineimap -o -u quiet
