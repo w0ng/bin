@@ -48,7 +48,7 @@ print_mem_used() {
 }
 
 print_volume() {
-  volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
+  volume="$(amixer get PCM | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
   echo -ne "\x05Ü\x04 Ô ${volume}%"
 }
 
