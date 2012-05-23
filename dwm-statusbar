@@ -24,7 +24,7 @@ print_torrent_status() {
   if [[ ! $torrent_status ]]; then
     torrent_status="Not downloading"
   fi
-  echo -ne "\x06Ü\x01 Ù ${torrent_status}"
+  echo -ne "\x06Ü\x01 Ù ${torrent_status}" | head -n 1
 }
 
 print_gmail_unread() {
