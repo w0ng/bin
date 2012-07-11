@@ -3,10 +3,10 @@
 # rsync backup script
 #
 
-#!/bin/sh
-# rsync backup script
+DEST=$1
+LIST=/home/w0ng/.config/backup.list
 
 sudo sh -c "
-rsync -av --delete-excluded --exclude-from=/home/w0ng/.config/backup.list / $1;
-touch $1/BACKUP
+  rsync -av --delete-excluded --exclude-from=$LIST / $DEST;
+  date > $DEST/BACKUP
 "
