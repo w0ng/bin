@@ -5,56 +5,56 @@
 # Status bar for dwm (parts taken from http://jasonwryan.com/)
 
 print_song_info() {
-  song_info="$(ncmpcpp --now-playing '{{{{%t \x06Ý\x0E }%a}}|{%f}}' | head -c 50)"
+  song_info="$(ncmpcpp --now-playing '{{{{%t \x05Ý\x0D }%a}}|{%f}}' | head -c 50)"
   if [[ ! $song_info ]]; then
     song_info="Not playing"
   fi
-  echo -ne "\x05Ü\x0E Î ${song_info}"
+  echo -ne "\x04Ü\x0D Î ${song_info}"
 }
 
 print_torrent_status() {
   torrent_status="$(transmission-remote -l | awk '/\ \ Up\ &\ Down\ \ /\
       && ! /\ \ Unknown\ \ /\
-      {print substr(substr($0,index($0,$13)),0,40), "\x05Ý\x0D "$5$6}')"
+      {print substr(substr($0,index($0,$13)),0,40), "\x04Ý\x0C "$3$6}')"
   if [[ ! $torrent_status ]]; then
     torrent_status="$( transmission-remote -l | awk '/\ \ Downloading\ \ /\
         && ! /\ \ Unknown\ \ /\
-        {print substr(substr($0,index($0,$11)),0,40), "\x05Ý\x0D "$5$6}')"
+        {print substr(substr($0,index($0,$11)),0,40), "\x04Ý\x0C "$5$6}')"
   fi
   if [[ ! $torrent_status ]]; then
     torrent_status="Not downloading"
   fi
-  echo -ne "\x06Ü\x0D Ù ${torrent_status}" | head -n 1
+  echo -ne "\x05Ü\x0C Ù ${torrent_status}" | head -n 1
 }
 
 print_gmail_unread() {
   gmail_unread="$(find $HOME/.mutt/maildir/gmail/inbox/new -type f | wc -l)"
-  echo -ne "\x05Ü\x0C Ó ${gmail_unread}"
+  echo -ne "\x04Ü\x0B Ó ${gmail_unread}"
 }
 
 print_mq_unread() {
   mq_unread="$(find $HOME/.mutt/maildir/mq/inbox/new -type f | wc -l)"
-  echo -ne "\x06Ý\x0C Ó ${mq_unread}"
+  echo -ne "\x05Ý\x0B Ó ${mq_unread}"
 }
 
 print_last_msg() {
   last_msg="$(cat $HOME/.logs/irssi_pipe)"
-  echo -ne "\x06Ü\x0B Ò ${last_msg}"
+  echo -ne "\x05Ü\x0A Ò ${last_msg}"
 }
 
 print_mem_used() {
   mem_used="$(free -m | awk '/buffers\/cache/ {print $3}')"
-  echo -ne "\x06Ý\x0A Þ ${mem_used}M"
+  echo -ne "\x05Ý\x09 Þ ${mem_used}M"
 }
 
 print_volume() {
   volume="$(amixer get PCM | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  echo -ne "\x05Ü\x07 Ô ${volume}%"
+  echo -ne "\x04Ü\x06 Ô ${volume}%"
 }
 
 print_datetime() {
   datetime="$(date "+%a %d %b Ý %H:%M")"
-  echo -ne "\x06Ü\x04 Õ ${datetime}"
+  echo -ne "\x05Ü\x02 Õ ${datetime}"
 }
 
 # network (see: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
@@ -79,9 +79,9 @@ while true; do
 #  let tx_total=$tx_now/1048576
 
   # output vars
-  print_cpu_used() { printf "%-12b" "\x05Ü\x0A Ï ${cpu_used}%"; }
-  print_rx_rate() { printf "%-13b" "\x06Ü\x09 Ð ${rx_rate}K"; }
-  print_tx_rate() { printf "%-12b" "\x05Ý \x08Ñ ${tx_rate}K"; }
+  print_cpu_used() { printf "%-12b" "\x04Ü\x09 Ï ${cpu_used}%"; }
+  print_rx_rate() { printf "%-13b" "\x05Ü\x08 Ð ${rx_rate}K"; }
+  print_tx_rate() { printf "%-12b" "\x04Ý \x07Ñ ${tx_rate}K"; }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "$(print_song_info) \
