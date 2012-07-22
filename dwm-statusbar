@@ -15,7 +15,7 @@ print_song_info() {
 print_torrent_status() {
   torrent_status="$(transmission-remote -l | awk '/\ \ Up\ &\ Down\ \ /\
       && ! /\ \ Unknown\ \ /\
-      {print substr(substr($0,index($0,$13)),0,40), "\x04Ý\x0C "$3$6}')"
+      {print substr(substr($0,index($0,$13)),0,40), "\x04Ý\x0C "$5$6}')"
   if [[ ! $torrent_status ]]; then
     torrent_status="$( transmission-remote -l | awk '/\ \ Downloading\ \ /\
         && ! /\ \ Unknown\ \ /\
