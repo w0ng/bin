@@ -27,15 +27,13 @@ print_torrent_status() {
   echo -ne "\x05Ü\x0C Ù ${torrent_status}" | head -n 1
 }
 
-print_gmail_unread() {
+print_email_unread() {
   gmail_unread="$(find $HOME/.mutt/maildir/gmail/inbox/new -type f | wc -l)"
-  echo -ne "\x04Ü\x0B Ó ${gmail_unread}"
+  mq_unread="$(find $HOME/.mutt/maildir/mq/inbox/new -type f | wc -l)"
+  wongdev_unread="$(find $HOME/.mutt/maildir/wongdev/inbox/new -type f | wc -l)"
+  echo -ne "\x04Ü\x0B Ó ${gmail_unread} ${mq_unread} ${wongdev_unread}"
 }
 
-print_mq_unread() {
-  mq_unread="$(find $HOME/.mutt/maildir/mq/inbox/new -type f | wc -l)"
-  echo -ne "Ý Ó ${mq_unread}"
-}
 
 print_last_msg() {
   last_msg="$(cat $HOME/.logs/irssi_pipe)"
@@ -86,7 +84,7 @@ while true; do
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "$(print_song_info) \
 $(print_torrent_status) \
-$(print_gmail_unread) $(print_mq_unread) $(print_last_msg) \
+$(print_email_unread) $(print_last_msg) \
 $(print_cpu_used) $(print_mem_used) \
 $(print_rx_rate) $(print_tx_rate) \
 $(print_volume) $(print_datetime) "
