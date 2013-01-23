@@ -14,15 +14,13 @@ print_song_info() {
 
 print_torrent_status() {
   torrent_status="$(transmission-remote -l | awk '/\ \ Up\ &\ Down\ \ /\
-      && ! /\ \ Unknown\ \ /\
-      {print substr(substr($0,index($0,$13)),0,40), "\\uE01B "$5$6}')"
+      && ! /\ \ Unknown\ \ / {print $5$6}')"
   if [[ ! $torrent_status ]]; then
     torrent_status="$( transmission-remote -l | awk '/\ \ Downloading\ \ /\
-        && ! /\ \ Unknown\ \ /\
-        {print substr(substr($0,index($0,$11)),0,40), "\\uE01B "$5$6}')"
+        && ! /\ \ Unknown\ \ / {print $5$6}')"
   fi
   if [[ ! $torrent_status ]]; then
-    torrent_status="Not downloading"
+    torrent_status="Idle"
   fi
   echo -ne "\x05\uE01A\x0C \uE017 ${torrent_status}" | head -n 1
 }
