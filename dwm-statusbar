@@ -5,7 +5,7 @@
 # Status bar for dwm (parts taken from http://jasonwryan.com/)
 
 print_song_info() {
-  song_info="$(ncmpcpp --now-playing '{{{{%t \uE01B }%a}}|{%f}}' | head -c 50)"
+  song_info="$(ncmpcpp --now-playing '{{{{%t \uE01B }%a}}|{%f}}' | head -c 75)"
   if [[ ! $song_info ]]; then
     song_info="Not playing"
   fi
