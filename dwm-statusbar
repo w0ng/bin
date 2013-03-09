@@ -17,8 +17,6 @@ print_torrent_status() {
   torrent_status="$(transmission-remote -l | awk -F "  +" '$5 ~ /^[0-9]/ {print $5}')"
   if [[ ! $torrent_status ]]; then
     torrent_status="Idle"
-  else
-    torrent_status="${torrent_status}"
   fi
   echo -ne "\x0A \uE017 \x0C ${torrent_status} "
 }
@@ -27,11 +25,7 @@ print_email_unread() {
   echo -ne "\x06 \uE014 \x0C"
   for maildir in $(find $HOME/.mutt/maildir/*/inbox/new -type d); do
     unread_count="$(ls "${maildir}" | wc -l)"
-    if [[ $unread_count -ne 0 ]]; then
-      echo -ne " ${unread_count}"
-    else
-      echo -ne " 0"
-    fi
+    echo -ne " ${unread_count}"
   done
   echo -n " "
 }
@@ -48,9 +42,6 @@ print_mem_used() {
 
 print_volume() {
   volume="$(amixer get PCM | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  if [[ $volume -ne 0 ]]; then
-    volume="${volume}"
-  fi
   echo -ne "\x09 \uE015 \x0C ${volume}% "
 }
 
