@@ -5,12 +5,39 @@
 # Status bar for dwm. Expanded from:
 # https://bitbucket.org/jasonwryan/eeepc/src/73dadb289dead8ef17ef29a9315ba8f1706927cb/Scripts/dwm-status
 
+# Colour codes from dwm/config.h
+colour_gry="\x01" # grey on black
+colour_wht="\x02" # white on black
+colour_dgry="\x04" # darkgrey on black
+colour_blk="\x05" # black on darkgrey
+colour_red="\x06" # colour_red on black
+colour_grn="\x07" # green on black
+colour_dylw="\x08" # orange on black
+colour_ylw="\x09" # yellow on black
+colour_blu="\x0A" # colour_blue on darkgrey
+colour_mag="\x0B" # colour_magenta on darkgrey
+colour_cyn="\x0C" # cyan on darkgrey
+
+# Icon glyphs from font xbmicons.pcf
+glyph_msc="\uE00E"
+glyph_cpu="\uE00F"
+glyph_mem="\uE010"
+glyph_dl="\uE011"
+glyph_ul="\uE012"
+glyph_com="\uE013"
+glyph_eml="\uE014"
+glyph_vol="\uE015"
+glyph_tim="\uE016"
+glyph_tor="\uE017"
+sep_solid="\uE01A"
+sep_line="\uE01B"
+
 print_song_info() {
   song_info="$(ncmpcpp --now-playing '{{{{%a \uE01B }%t}}|{%f}}' | head -c 75)"
   if [[ ! $song_info ]]; then
     song_info="Off"
   fi
-  echo -ne "\x04\uE01A\x0D \uE00E ${song_info} "
+  echo -ne "${colour_dgry}${sep_solid}${colour_cyn} ${glyph_msc} ${song_info} "
 }
 
 print_torrent_status() {
@@ -18,36 +45,36 @@ print_torrent_status() {
   if [[ ! $torrent_status ]]; then
     torrent_status="Idle"
   fi
-  echo -ne "\x05\uE01A\x0C \uE017 ${torrent_status} "
+  echo -ne "${colour_blk}${sep_solid}${colour_dylw} ${glyph_tor} ${torrent_status} "
 }
 
 print_email_unread() {
-  echo -ne "\x04\uE01A\x0B \uE014"
+  echo -ne "${colour_dgry}${sep_solid}${colour_ylw} ${glyph_eml}"
   for maildir in $(find $HOME/.mutt/maildir/*/inbox/new -type d); do
     unread_count="$(ls "${maildir}" | wc -l)"
-    echo -ne " ${unread_count}"
+    echo -n " ${unread_count}"
   done
   echo -n " "
 }
 
 print_last_msg() {
   last_msg="$(cat $HOME/.logs/irssi_pipe)"
-  echo -ne "\x05\uE01A\x0A \uE013 ${last_msg} "
+  echo -ne "${colour_blk}${sep_solid}${colour_dylw} ${glyph_com} ${last_msg} "
 }
 
 print_mem_used() {
   mem_used="$(free -m | awk 'NR==3 {print $3}')"
-  echo -ne "\uE01B \uE010 ${mem_used}M "
+  echo -ne "${sep_line} ${glyph_mem} ${mem_used}M "
 }
 
 print_volume() {
   volume="$(amixer get PCM | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  echo -ne "\x04\uE01A\x06 \uE015 ${volume}% "
+  echo -ne "${colour_dgry}${sep_solid}${colour_mag} ${glyph_vol} ${volume}% "
 }
 
 print_datetime() {
-  datetime="$(date "+%a %d %b \uE01B %H:%M")"
-  echo -ne "\x05\uE01A\x02 \uE016 ${datetime} "
+  datetime="$(date "+%a %d %b ${sep_line} %H:%M")"
+  echo -ne "${colour_blk}${sep_solid}${colour_wht} ${glyph_tim} ${datetime} "
 }
 
 # network (from: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
@@ -72,9 +99,15 @@ while true; do
   #  let tx_total=$tx_now/1048576
 
   # output vars
-  print_cpu_used() { printf "%-14b" "\x04\uE01A\x09 \uE00F ${cpu_used}%"; }
-  print_rx_rate() { printf "%-15b" "\x05\uE01A\x08 \uE011 ${rx_rate}K"; }
-  print_tx_rate() { printf "%-14b" "\x01\uE01B \x07\uE012 ${tx_rate}K"; }
+  print_cpu_used() {
+    printf "%-14b" "${colour_dgry}${sep_solid}${colour_blu} ${glyph_cpu} ${cpu_used}%"
+  }
+  print_rx_rate() {
+    printf "%-15b" "${colour_blk}${sep_solid}${colour_grn} ${glyph_dl} ${rx_rate}K"
+  }
+  print_tx_rate() {
+    printf "%-14b" "${colour_gry}${sep_line}${colour_red} ${glyph_ul} ${tx_rate}K"
+  }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "$(print_song_info)\
