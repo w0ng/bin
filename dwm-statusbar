@@ -6,11 +6,11 @@
 # https://bitbucket.org/jasonwryan/eeepc/src/73dadb289dead8ef17ef29a9315ba8f1706927cb/Scripts/dwm-status
 
 print_song_info() {
-  song_info="$(ncmpcpp --now-playing '{{{{%a - }%t}}|{%f}}' | head -c 90)"
+  song_info="$(ncmpcpp --now-playing '{{{{%a \uE01B }%t}}|{%f}}' | head -c 80)"
   if [[ ! $song_info ]]; then
     song_info="Off"
   fi
-  echo -ne "\x08 \uE00E \x0C ${song_info} "
+  echo -ne "\x04\uE01A\x0D \uE00E ${song_info} "
 }
 
 print_torrent_status() {
@@ -18,11 +18,11 @@ print_torrent_status() {
   if [[ ! $torrent_status ]]; then
     torrent_status="Idle"
   fi
-  echo -ne "\x0A \uE017 \x0C ${torrent_status} "
+  echo -ne "\x05\uE01A\x0C \uE017 ${torrent_status} "
 }
 
 print_email_unread() {
-  echo -ne "\x06 \uE014 \x0C"
+  echo -ne "\x04\uE01A\x0B \uE014"
   for maildir in $(find $HOME/.mutt/maildir/*/inbox/new -type d); do
     unread_count="$(ls "${maildir}" | wc -l)"
     echo -ne " ${unread_count}"
@@ -32,22 +32,22 @@ print_email_unread() {
 
 print_last_msg() {
   last_msg="$(cat $HOME/.logs/irssi_pipe)"
-  echo -ne "\x0A \uE013 \x0C ${last_msg} "
+  echo -ne "\x05\uE01A\x0A \uE013 ${last_msg} "
 }
 
 print_mem_used() {
   mem_used="$(free -m | awk 'NR==3 {print $3}')"
-  echo -ne "\x07 \uE010 \x0C ${mem_used}M "
+  echo -ne "\uE01B \uE010 ${mem_used}M "
 }
 
 print_volume() {
   volume="$(amixer get PCM | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  echo -ne "\x09 \uE015 \x0C ${volume}% "
+  echo -ne "\x04\uE01A\x06 \uE015 ${volume}% "
 }
 
 print_datetime() {
   datetime="$(date "+%a %d %b %I:%M %p")"
-  echo -ne "\x0B \uE016 \x0C ${datetime} "
+  echo -ne "\x05\uE01A\x02 \uE016 ${datetime} "
 }
 
 # network (from: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
@@ -72,9 +72,9 @@ while true; do
   #  let tx_total=$tx_now/1048576
 
   # output vars
-  print_cpu_used() { printf "%-12b" "\x07 \uE00F \x0C ${cpu_used}% "; }
-  print_rx_rate() { printf "%-13b" "\x05 \uE011 \x0C ${rx_rate}K "; }
-  print_tx_rate() { printf "%-12b" "\x04 \uE012 \x0C ${tx_rate}K "; }
+  print_cpu_used() { printf "%-14b" "\x04\uE01A\x09 \uE00F ${cpu_used}%"; }
+  print_rx_rate() { printf "%-15b" "\x05\uE01A\x08 \uE011 ${rx_rate}K"; }
+  print_tx_rate() { printf "%-14b" "\x01\uE01B \x07\uE012 ${tx_rate}K"; }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
   xsetroot -name "$(print_song_info)\
