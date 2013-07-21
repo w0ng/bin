@@ -16,12 +16,12 @@ if [[ $# -eq 1 && $1 == "-v" ]]; then
   for i in {0..7}
   do
     printf "%-30b" "│\e[0;$((30+$i))m ████████   $colour_names[i+1]"
-    echo -nE "\e[0;$((30+$i))m   "
+    printf %s "\e[0;$((30+$i))m   "
     printf "%-11b" "colors$i"
     printf "$colur_hexes[i+1]\e[0m │\n"
 
     printf "%-30b" "│\e[1;$((30+$i))m ████████   $colour_names[i+1]"
-    echo -nE "\e[1;$((30+$i))m   "
+    printf %s "\e[1;$((30+$i))m   "
     printf "%-11b" "colors$((i+8))"
     printf "$colur_hexes[i+9]\e[0m │\n"
   done
