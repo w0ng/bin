@@ -64,7 +64,7 @@ print_last_msg() {
 
 print_mem_used() {
   mem_used="$(free -m | awk 'NR==3 {print $3}')"
-  echo -ne "${sep_bar}${glyph_mem} ${mem_used}M "
+  echo -ne "${sep_bar} ${glyph_mem} ${mem_used}M "
 }
 
 print_volume() {
@@ -73,7 +73,7 @@ print_volume() {
 }
 
 print_datetime() {
-  datetime="$(date "+%a %d %b ${sep_bar}%H:%M")"
+  datetime="$(date "+%a %d %b ${sep_bar} %H:%M")"
   echo -ne "${colour_wht} ${glyph_tim} ${datetime} "
 }
 
@@ -100,13 +100,13 @@ while true; do
 
   # output vars
   print_cpu_used() {
-    printf "%-11b" "${colour_blu} ${glyph_cpu} ${cpu_used}%"
+    printf "%-10b" "${colour_blu} ${glyph_cpu} ${cpu_used}% "
   }
   print_rx_rate() {
-    printf "%-11b" "${colour_grn} ${glyph_dl} ${rx_rate}K"
+    printf "%-11b" "${colour_grn} ${glyph_dl} ${rx_rate}K "
   }
   print_tx_rate() {
-    printf "%-14b" "${colour_gry}${sep_bar}${colour_red}${glyph_ul} ${tx_rate}K"
+    printf "%-15b" "${colour_gry}${sep_bar} ${colour_red}${glyph_ul} ${tx_rate}K"
   }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
