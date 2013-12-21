@@ -31,13 +31,14 @@ glyph_tim="\uE016"
 glyph_tor="\uE017"
 sep_solid="\uE01A"
 sep_line="\uE01B"
+sep_bar="\uE020"
 
 print_song_info() {
-  song_info="$(ncmpcpp --now-playing '{{{{%a \uE01B }%t}}|{%f}}' | head -c 75)"
+  song_info="$(ncmpcpp --now-playing '{{{{%a - }%t}}|{%f}}' | head -c 75)"
   if [[ ! $song_info ]]; then
     song_info="Off"
   fi
-  echo -ne "${colour_dgry}${sep_solid}${colour_cyn} ${glyph_msc} ${song_info} "
+  echo -ne "${colour_cyn} ${glyph_msc} ${song_info} "
 }
 
 print_torrent_status() {
@@ -45,36 +46,35 @@ print_torrent_status() {
   if [[ ! $torrent_status ]]; then
     torrent_status="Idle"
   fi
-  echo -ne "${colour_blk}${sep_solid}${colour_dylw} ${glyph_tor} ${torrent_status} "
+  echo -ne "${colour_dylw} ${glyph_tor} ${torrent_status} "
 }
 
 print_email_unread() {
-  echo -ne "${colour_dgry}${sep_solid}${colour_ylw} ${glyph_eml}"
+  echo -ne "${colour_ylw} ${glyph_eml} "
   for maildir in $(find $HOME/.mutt/maildir/*/inbox/new -type d); do
     unread_count="$(ls "${maildir}" | wc -l)"
-    echo -n " ${unread_count}"
+    echo -n "${unread_count} "
   done
-  echo -n " "
 }
 
 print_last_msg() {
   last_msg="$(cat $HOME/.logs/irssi_pipe)"
-  echo -ne "${colour_blk}${sep_solid}${colour_dylw} ${glyph_com} ${last_msg} "
+  echo -ne "${colour_dylw} ${glyph_com} ${last_msg} "
 }
 
 print_mem_used() {
   mem_used="$(free -m | awk 'NR==3 {print $3}')"
-  echo -ne "${sep_line} ${glyph_mem} ${mem_used}M "
+  echo -ne "${sep_bar}${glyph_mem} ${mem_used}M "
 }
 
 print_volume() {
   volume="$(amixer get PCM | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-  echo -ne "${colour_dgry}${sep_solid}${colour_mag} ${glyph_vol} ${volume}% "
+  echo -ne "${colour_mag} ${glyph_vol} ${volume}% "
 }
 
 print_datetime() {
-  datetime="$(date "+%a %d %b ${sep_line} %H:%M")"
-  echo -ne "${colour_blk}${sep_solid}${colour_wht} ${glyph_tim} ${datetime} "
+  datetime="$(date "+%a %d %b ${sep_bar}%H:%M")"
+  echo -ne "${colour_wht} ${glyph_tim} ${datetime} "
 }
 
 # network (from: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
@@ -100,13 +100,13 @@ while true; do
 
   # output vars
   print_cpu_used() {
-    printf "%-14b" "${colour_dgry}${sep_solid}${colour_blu} ${glyph_cpu} ${cpu_used}%"
+    printf "%-11b" "${colour_blu} ${glyph_cpu} ${cpu_used}%"
   }
   print_rx_rate() {
-    printf "%-15b" "${colour_blk}${sep_solid}${colour_grn} ${glyph_dl} ${rx_rate}K"
+    printf "%-11b" "${colour_grn} ${glyph_dl} ${rx_rate}K"
   }
   print_tx_rate() {
-    printf "%-14b" "${colour_gry}${sep_line}${colour_red} ${glyph_ul} ${tx_rate}K"
+    printf "%-14b" "${colour_gry}${sep_bar}${colour_red}${glyph_ul} ${tx_rate}K"
   }
 
   # Pipe to status bar, not indented due to printing extra spaces/tabs
