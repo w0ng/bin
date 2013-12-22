@@ -79,8 +79,8 @@ print_datetime() {
 
 # network (from: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
 # cpu (from: https://bbs.archlinux.org/viewtopic.php?pid=661641#p661641)
-rx_old=$(cat /sys/class/net/eth0/statistics/rx_bytes)
-tx_old=$(cat /sys/class/net/eth0/statistics/tx_bytes)
+rx_old=$(cat /sys/class/net/enp4s0/statistics/rx_bytes)
+tx_old=$(cat /sys/class/net/enp4s0/statistics/tx_bytes)
 
 while true; do
   # get new cpu idle and total usage
@@ -90,8 +90,8 @@ while true; do
   let cpu_used="100 * ($cpu_interval - ($cpu_idle_now-${cpu_idle_old:-0})) / $cpu_interval"
 
   # get new rx/tx counts
-  rx_now=$(cat /sys/class/net/eth0/statistics/rx_bytes)
-  tx_now=$(cat /sys/class/net/eth0/statistics/tx_bytes)
+  rx_now=$(cat /sys/class/net/enp4s0/statistics/rx_bytes)
+  tx_now=$(cat /sys/class/net/enp4s0/statistics/tx_bytes)
   # calculate the rate (K) and total (M)
   let rx_rate=($rx_now-$rx_old)/1024
   let tx_rate=($tx_now-$tx_old)/1024
