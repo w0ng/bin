@@ -18,7 +18,7 @@ if [[ -f "$playlist" ]]; then
     echo -e "\nMultitple results found. Refine search."
     exit 1
   else 
-    /usr/bin/mplayer -really-quiet -cache 2048 "$search_results"
+    /usr/bin/mpv -really-quiet -cache 2048 "$search_results"
   fi
 else
   echo "Playlist not found"
