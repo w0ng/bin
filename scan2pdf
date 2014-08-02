@@ -11,7 +11,7 @@ output="$1"
 tmp_tiff=".tmp.tiff"
 
 echo -n "Scanning TIFF image..." &&
-    scanimage --format=tiff --resolution 150 > "$tmp_tiff" && 
+    scanimage --format=tiff --resolution 300 > "$tmp_tiff" &&
     echo "success." || exit 1
 
 echo -n "Converting TIFF to PDF..." &&
