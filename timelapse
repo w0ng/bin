@@ -1,0 +1,3 @@
+#!/bin/bash
+# Takes a screenshot every 10s
+while true; do scrot $(date +%Y%m%d%H%M%S).png; sleep 10; done
