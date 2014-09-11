@@ -34,7 +34,7 @@ sep_line="\uE01B"
 sep_bar="\uE020"
 
 print_song_info() {
-  song_info="$(ncmpcpp --now-playing '{{{{%a \uE01B }%t}}|{%f}}' | head -c 75)"
+  song_info="$(mpc current -f '[[[[%artist% \uE01B ]%title%]]|[%file%]]' | head -c 75)"
   if [[ ! $song_info ]]; then
     song_info="Off"
   fi
@@ -80,8 +80,8 @@ print_datetime() {
 
 # network (from: http://dzen.geekmode.org/dwiki/doku.php?id=dzen:network-meter)
 # cpu (from: https://bbs.archlinux.org/viewtopic.php?pid=661641#p661641)
-rx_old=$(cat /sys/class/net/enp4s0/statistics/rx_bytes)
-tx_old=$(cat /sys/class/net/enp4s0/statistics/tx_bytes)
+rx_old=$(cat /sys/class/net/enp5s0/statistics/rx_bytes)
+tx_old=$(cat /sys/class/net/enp5s0/statistics/tx_bytes)
 
 while true; do
   # get new cpu idle and total usage
@@ -91,8 +91,8 @@ while true; do
   let cpu_used="100 * ($cpu_interval - ($cpu_idle_now-${cpu_idle_old:-0})) / $cpu_interval"
 
   # get new rx/tx counts
-  rx_now=$(cat /sys/class/net/enp4s0/statistics/rx_bytes)
-  tx_now=$(cat /sys/class/net/enp4s0/statistics/tx_bytes)
+  rx_now=$(cat /sys/class/net/enp5s0/statistics/rx_bytes)
+  tx_now=$(cat /sys/class/net/enp5s0/statistics/tx_bytes)
   # calculate the rate (K) and total (M)
   let rx_rate=($rx_now-$rx_old)/1024
   let tx_rate=($tx_now-$tx_old)/1024
