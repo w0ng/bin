@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# Invert Google Drive's OSX notification icon colours
+# to make it visible in Yosemite's dark menu bar
+
+resource_dir="$HOME/Applications/Google Drive.app/Contents/Resources"
+
+if [[ ! -d "${resource_dir}" ]]; then
+    echo "Google Drive not found in ${resource_dir}"
+    exit 1
+fi
+
+cd "${resource_dir}"
+
+for filename in *-inverse*.png; do
+    img="${filename/-inverse/}"
+    img_tmp="${img}.tmp"
+    img_inverse="${filename}"
+    if [[ -f "${img}" && -f "${img_inverse}" ]]; then
+        mv "${img}" "${img_tmp}"
+        mv "${img_inverse}" "${img}"
+        mv "${img_tmp}" "${img_inverse}"
+    fi
+done
+
+echo "Inverse icon images swapped successfully. Restart Google Drive."
+exit 0
