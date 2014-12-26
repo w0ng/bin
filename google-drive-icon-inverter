@@ -12,7 +12,7 @@ fi
 
 cd "${resource_dir}"
 
-for filename in *-inverse*.png; do
+for filename in ./*-inverse*.png; do
     img="${filename/-inverse/}"
     img_tmp="${img}.tmp"
     img_inverse="${filename}"
