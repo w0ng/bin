@@ -1,0 +1,2 @@
+#bin/bash
+find /Applications/*.app/Contents/_MASReceipt -type f -name 'receipt' -maxdepth 1 -print | sed 's#^/Applications/\(.*\)\.app/.*#\1#'
