@@ -13,9 +13,7 @@ on run argv
 
     else
         tell application "Finder"
-            set visible of process appName to true
+            set frontmost of process appName to true
         end tell
     end if
 end run
-
-
