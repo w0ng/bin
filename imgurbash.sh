@@ -85,14 +85,14 @@ while [ $# -gt 0 ]; do
 		continue
 	elif [ $(echo $response | grep -c "<error_msg>") -gt 0 ]; then
 		echo "Error message from imgur:" >&2
-		echo $response | sed -r 's/.*<error_msg>(.*)<\/error_msg>.*/\1/' >&2
+		echo $response | sed -E 's/.*<error_msg>(.*)<\/error_msg>.*/\1/' >&2
 		errors=true
 		continue
 	fi
 
 	# parse the response and output our stuff
-	url=$(echo $response | sed -r 's/.*<original_image>(.*)<\/original_image>.*/\1/')
-	deleteurl=$(echo $response | sed -r 's/.*<delete_page>(.*)<\/delete_page>.*/\1/')
+	url=$(echo $response | sed -E 's/.*<original_image>(.*)<\/original_image>.*/\1/')
+	deleteurl=$(echo $response | sed -E 's/.*<delete_page>(.*)<\/delete_page>.*/\1/')
 	echo $url
 	echo "Delete page: $deleteurl" >&2
 
@@ -102,13 +102,14 @@ while [ $# -gt 0 ]; do
 done
 
 # put the URLs on the clipboard if we have xsel or xclip
-if [ $DISPLAY ]; then
-	{ type xsel >/dev/null 2>/dev/null && echo -n $clip | xsel; } \
-		|| { type xclip >/dev/null 2>/dev/null && echo -n $clip | xclip; } \
-		|| echo "Haven't copied to the clipboard: no xsel or xclip" >&2
-else
-	echo "Haven't copied to the clipboard: no \$DISPLAY" >&2
-fi
+#if [ $DISPLAY ]; then
+#	{ type xsel >/dev/null 2>/dev/null && echo -n $clip | xsel; } \
+#		|| { type xclip >/dev/null 2>/dev/null && echo -n $clip | xclip; } \
+#		|| echo "Haven't copied to the clipboard: no xsel or xclip" >&2
+#else
+#	echo "Haven't copied to the clipboard: no \$DISPLAY" >&2
+#fi
+type pbcopy >/dev/null 2>/dev/null && echo -n $clip | pbcopy;
 
 if $errors; then
 	exit 1
