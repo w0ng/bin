@@ -1,2 +1,0 @@
-#!/bin/sh
-/usr/bin/transmission-remote --add "$1"

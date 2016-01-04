@@ -1,8 +1,0 @@
-#!/bin/bash
-if [[ -f $1 ]]; then
-  g++ -lGL -lGLU -lglut $1 -o ${1%.*} && ./${1%.*}
-else
-  echo "Usage: gl FILE"
-  exit 1
-fi
-
